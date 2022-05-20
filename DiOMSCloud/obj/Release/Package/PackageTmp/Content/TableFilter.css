@@ -1,0 +1,9 @@
+﻿table.filter {
+    border-spacing: 5px;
+}
+/* cellspacing */
+
+th.filter, td.filter {
+    padding: 5px;
+}
+/* cellpadding */

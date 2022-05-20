@@ -1,0 +1,40 @@
+﻿@model SecurityModel
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Security", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "loginFrm" }))
+{
+    @Html.AntiForgeryToken()
+    <i class="glyphicon glyphicon-user"></i>@:&nbsp; @Html.TextBoxFor(model => model.UserName, new { id = "UserName", @class = "form - control", placeholder = "User Name" })
+    @Html.ValidationMessageFor(model => model.UserName)
+    <p></p>
+    <i class="glyphicon glyphicon-lock"></i>@:&nbsp; @Html.PasswordFor(model => model.Password, new { id = "Password", @class = "form - control", placeholder = "Password" })
+    @Html.ValidationMessageFor(model => model.Password)
+    <p></p>
+    <img src="@Url.Action("GenerateCapchaImage", "Security", new { area=""})" /><br />
+    @Html.TextBoxFor(x => x.CapchaLetters, new { maxlength = "5", pattern = "[A-Za-z0-9]{5}", title = "Please input 5 alphanumerblet" })
+    @Html.ValidationMessageFor(model => model.CapchaLetters)
+    <!-- <input type="text" name="captchalogin" id="captchalogin" maxlength="5" pattern="[A-Za-z0-9]{5}" title="Please input 5 alphanumerblet" required /> -->
+    <p></p>
+    <button type="submit" class="btn btn-primary" onclick="General.DisableSubmitButton(event,'#loginFrm',null)"><span class="glyphicon glyphicon-off"></span> Login</button>
+    <!--<input type="submit" value="Save" onclick="General.DisableSubmitButton(event,'#loginFrm',null)" class="btn btn-primary" />-->
+}
+
+<!--<button id="tt">test anti forgen</button>-->
+<p></p>
+@section scripts{
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+
+

@@ -1,0 +1,134 @@
+﻿@model DiOMSCloud.Areas.Supply.Models.POCriteria
+
+
+@{
+    ViewBag.Title = "Purchase Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/TableFilter.css">
+
+<h2>Purchase Order</h2>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Note To PO</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <span id="modalMsg"></span><br />
+                    @Html.Label("PO No:")<font color="blue"><span id="pos"></span></font>
+                    <br /><br />
+                    @Html.TextArea("poNote", new { id = "poNote", rows = "5", @class="form-control" })
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="UpdateMultiPO" class="btn btn-default" onclick="UpdatePONote()">Update</button> <button type="button" class="btn btn-default" data-dismiss="modal" id="modalClose">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Ajax.BeginForm("ListPO", "PO", new { area = "Supply"}, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "POList", InsertionMode = InsertionMode.Replace, LoadingElementId = "loader", OnBegin = "new function(){General.DisableButton('#filterPO');General.Empty('#PODetails')}", OnComplete = "General.EnableButton('#filterPO')" }, new { id = "frmFilterPO" }))
+{
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">Filter</div>
+            <div class="panel-body">
+                <table class="filter" border="0">
+                    <tr>
+                        <td class="filter">
+                            @Html.Label("PO Original No")
+                        </td>
+                        <td class="filter">
+                            @Html.TextBoxFor(cr => cr.POOriginalNo, new { placeholder = "PO Original No" })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label("PO Number")
+                        </td>
+                        <td class="filter">
+                            @Html.TextBoxFor(cr => cr.PONumber, new { placeholder = "PO Number" })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label("Vendor")
+                        </td>
+                        <td class="filter">
+                            @Html.DropDownListFor(cr => cr.VendorNo, (List<SelectListItem>)ViewBag.Vendors)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="filter">
+                            @Html.Label("From Date")
+                        </td>
+                        <td class="filter">
+                            @Html.EditorFor(x => x.FromPODate, new { htmlAttributes = new { @class = "form-control", placeholder = "Order Date" } })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label("To Date")
+                        </td>
+                        <td class="filter">
+                            @Html.EditorFor(x => x.ToPODate, new { htmlAttributes = new { @class = "form-control", placeholder = "Order Date" } })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label("Status")
+                        </td>
+                        <td class="filter">
+                            <div>
+                                <select multiple="multiple" style="width: auto;" id="Tempt" name="Tempt" onchange="General.UpdateSelection(this,'#Status')">
+                                    @if (ViewBag.Status != null)
+                                    {
+                                        foreach (var item in (List<SelectListItem>)ViewBag.Status)
+                                        {
+                                            <option value=@item.Value>
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>@Html.HiddenFor(x => x.Status)
+                        </td>
+                    </tr>
+                </table>
+                <p></p><input type="submit" value="Filter" id="filterPO" class="btn btn-primary" title="Filter Data" /> <button type="button" class="btn btn-primary"  title="Add Note to multiple Purchase Order" data-toggle="modal" data-target="#myModal" onclick="Supply.PurchaseOrder.GetSelectedPO()">Add Multi Note</button>
+                <!--<input type="button" title="Add Note to multiple Purchase Order" value="Multiple Note" onclick="Supply.PurchaseOrder.AddNoteToMultiplePO('@Url.Action("Edit", "PO", new { area = "Supply"})')" class="btn btn-primary" />-->
+            </div>
+        </div>
+    </div>
+}
+
+<p></p>
+<div id="POList"></div>
+<p></p>
+<div id="PODetails"></div>
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    <!--  library for date picker in edit for  -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!------- Check box in dropdown     -->
+    <script type="text/javascript" src="http://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="http://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css" />
+    @Scripts.Render("~/Scripts/boostrap.min.js")
+    @Scripts.Render("~/Content/boostrap.min.css")
+}
+
+<script>
+
+    function UpdatePONote() {
+        var url = "@Url.Action("UpdateNote", "PO",new { area = "Supply"})";
+        var result = Supply.PurchaseOrder.UpdateNoteToPO(url, $("#poNote").val());
+    }
+
+</script>
+@section functions
+{
+    var dateCtr = ["#FromPODate", "#ToPODate"];
+    General.setDatePickerToEditor(dateCtr);
+    General.setMultiSelectToList("#Tempt");
+}

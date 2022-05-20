@@ -1,0 +1,46 @@
+﻿@model ICollection<SODetailView>
+
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">Line Items</div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="header text-center">SO No</th>
+                        <th class="header text-center">ERP Item Code</th>
+                        <th class="header text-center">Description</th>
+                        <th class="header text-center">Quantity</th>
+                        <th class="header text-center">Unit Price</th>
+                        <th class="header text-center">UOM</th>
+                        <th class="header text-center">Amount</th>
+                    </tr>
+
+                </thead>
+
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var pod in Model)
+                    {
+                        <tr align="center">
+                            <td><b><font color="blue">@pod.SONo</font></b></td>
+                            <td>@pod.ERPItemCode</td>
+                            <td>@pod.Description</td>
+                            <td>@pod.Quantity</td>
+                            <td>@pod.UnitPrice</td>
+                            <td>@pod.UnitOfMeasureCode</td>
+                            <td>
+                                @{
+                                    string payment = string.Format("{0:#,###,###.###} {1}", pod.Amount, "$");
+                                    @payment
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                }
+
+            </table>
+        </div>
+        </div>
+    </div>

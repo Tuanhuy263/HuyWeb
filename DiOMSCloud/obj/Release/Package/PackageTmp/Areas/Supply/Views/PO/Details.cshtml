@@ -1,0 +1,39 @@
+﻿@model ICollection<PODetailView>
+    @{
+        /**/
+
+        ViewBag.Title = "Purchase Order Details";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Details</h2>
+    <div>
+        <table class="table table-condensed-xs">
+            <thead>
+                <tr>
+                    <th class="header text-center">ERP Item Code</th>
+                    <th class="header text-center">Description</th>
+                    <th class="header text-center">Quantity</th>
+                    <th class="header text-center">Unit Price</th>
+                    <th class="header text-center">UOM</th>
+                </tr>
+
+            </thead>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var pod in Model)
+                {
+                    <tr>
+                        <td>@pod.ERPItemCode</td>
+                        <td>@pod.Description</td>
+                        <td>@pod.Quantity</td>
+                        <td>@pod.UnitPrice</td>
+                        <td>@pod.UnitOfMeasureCode</td>
+                    </tr>
+                }
+
+            }
+
+        </table>
+    </div>

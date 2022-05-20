@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "q/tAmryJZNj426vej+aslzurrtNBiXWf89Vf3dfue7CePsU44slFE654oXAxbPr2TsDBk8GBmttyzlpBWPf5sA==",
+  "success": true,
+  "projectFilePath": "D:\\Document\\Sample SourceCode\\Internal\\DiOMSCloud\\Testing\\Testing.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\huytnguyen\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512"
+  ],
+  "logs": []
+}

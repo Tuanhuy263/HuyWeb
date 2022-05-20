@@ -1,0 +1,74 @@
+﻿@using PagedList.Mvc
+@model  PagedList.IPagedList<POListView>
+
+<link rel="stylesheet" href="~/Content/PagingStyle.css">
+@{
+    string noteid = "";
+    string viewID = ViewBag.ViewID.ToString();
+}
+<input type="checkbox" title="Only apply into current page" onclick="Supply.PurchaseOrder.Check_UncheckAll(this)" />Check/Uncheck All
+@using (Html.BeginForm())
+{
+    <table class="table table-condensed-xs">
+        <thead>
+            <tr>
+                <th></th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "ID", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "PONo", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "POOriginalNo", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "Vendor", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "SONo", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "PODate", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "Status", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "PaymentDue", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "Note", Session["Language"].ToString())].ToString()</th>
+                <th></th>
+            </tr>
+        </thead>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var po in Model)
+            {
+        <tr align="center">
+            <td>@Html.CheckBox(string.Format("chkPO_{0}", po.PONo), new { id = string.Format("chkPO_{0}", po.PONo) })</td>
+            <td><a href="#" id="@po.PONo" onclick="Supply.PurchaseOrder.ShowPODetails(event,'@Url.Action("Details", "PO", new { area = "Supply" })','@po.PONo')">@po.PONo</a>
+            <td>@po.PONumber</td>
+            <td>@po.POOriginalNumber</td>
+            <td>@po.VENDOR_NO</td>
+            <td>@po.SONumber</td>
+            <td>@po.PODate.ToString("MM/dd/yyyy")</td>
+            <td>@po.Status</td>
+            <td>
+                @{
+                    string payment = string.Format("{0:#,###,###.###} {1}", po.PaymentDue, "$");
+                    @payment
+                }
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(po.Note))
+                {
+                    noteid = string.Format("note{0}", po.PONo);
+                <a data-toggle="collapse" data-parent="#accordion" href="#@noteid">@ViewData[string.Format("{0}{1}{2}", viewID, "ViewNote", Session["Language"].ToString())].ToString()</a>
+                    <div id="@noteid" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            @po.Note
+                        </div>
+                    </div>
+                }
+            </td>
+            <td><a href="@Url.Action("Edit","PO",new {area="Supply", id=po.PONo.ToString() })">@ViewData[string.Format("{0}{1}{2}", viewID, "AddNote", Session["Language"].ToString())].ToString()</a></td>
+        </tr>
+            }
+        }
+
+    </table>
+    <p></p>
+    <div id="container" style="margin-left: 20px">
+        <p></p>
+        <p></p>
+        <div class="pagination" style="margin-left: 400px">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("ListPO", "PO", new { page = page, area = "Supply" }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "POList" }))
+        </div>
+    </div>
+}

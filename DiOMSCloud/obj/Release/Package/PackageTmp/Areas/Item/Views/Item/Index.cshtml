@@ -1,0 +1,69 @@
+﻿@model ItemCriteria
+@{
+    ViewBag.Title = "Items";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/TableFilter.css">
+
+<h1>Items</h1>
+@using (Ajax.BeginForm("ListItem", "Item", new { area = "Item"}, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "ItemList", InsertionMode = InsertionMode.Replace, LoadingElementId = "loader", OnBegin = "General.DisableButton('#filterItem')", OnComplete = "General.EnableButton('#filterItem')" }, new { id = "frmFilterItem" }))
+{
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">Filter</div>
+            <div class="panel-body">
+                <table class="filter" border="0">
+                    <tr>
+                        <td class="filter">
+                            @Html.Label("ERP Item Code")
+                        </td>
+                        <td class="filter">
+                            @Html.TextBoxFor(cr => cr.ERPItemCode, new { placeholder = "ERP Item Code" })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label("Item Type")
+                        </td>
+                        <td class="filter">
+                            <div>
+                                <select multiple="multiple" style="width: auto;" id="Tempt" name="Tempt" onchange="General.UpdateSelection(this,'#ItemType')">
+                                    @if (ViewBag.ItemType != null)
+                                    {
+                                        foreach (var item in (List<SelectListItem>)ViewBag.ItemType)
+                                        {
+                                            <option value=@item.Value>
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>@Html.HiddenFor(x => x.ItemType)
+                        </td>
+                    </tr>
+                </table>
+                <p></p><input type="submit" value="Filter" id="filterItem" class="btn btn-primary" title="Filter Data" />
+            </div>
+        </div>
+    </div>
+
+}
+<p></p>
+<div id="ItemList"></div>
+<p>
+    <!--button onclick='Item.GetJWTToKen()'>test</button>-->
+</p>
+@section scripts
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <!------- Check box in dropdown     -->
+    <script type="text/javascript" src="http://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="http://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css" />
+    <script src="~/Scripts/boostrap.min.js"></script>
+    <script src="~/Content/boostrap.min.css"></script>
+}
+
+@section functions
+{
+    General.setMultiSelectToList("#Tempt");
+}

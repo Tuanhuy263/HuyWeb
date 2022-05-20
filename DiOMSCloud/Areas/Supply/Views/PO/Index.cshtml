@@ -1,0 +1,140 @@
+﻿@model DiOMSCloud.Areas.Supply.Models.POCriteria
+
+
+@{
+    ViewBag.Title = "Purchase Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string viewID = ViewBag.ViewID.ToString();
+}
+
+<link rel="stylesheet" href="~/Content/TableFilter.css">
+
+<h2>@ViewData[string.Format("{0}{1}{2}", viewID, "Title", Session["Language"].ToString())].ToString()</h2>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Note To PO</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <span id="modalMsg"></span><br />
+                    @Html.Label("PO No:")<font color="blue"><span id="pos"></span></font>
+                    <br /><br />
+                    @Html.TextArea("poNote", new { id = "poNote", rows = "5", @class="form-control" })
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="UpdateMultiPO" class="btn btn-default" onclick="UpdatePONote()">Update</button> <button type="button" class="btn btn-default" data-dismiss="modal" id="modalClose">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Ajax.BeginForm("ListPO", "PO", new { area = "Supply"}, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "POList", InsertionMode = InsertionMode.Replace, LoadingElementId = "loader", OnBegin = "new function(){General.DisableButton('#filterPO');General.Empty('#PODetails')}", OnComplete = "General.EnableButton('#filterPO')" }, new { id = "frmFilterPO" }))
+{
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">Filter</div>
+            <div class="panel-body">
+                <table class="filter" border="0">
+                    <tr>
+                        <td class="filter">
+                            @Html.Label(ViewData[string.Format("{0}{1}{2}", viewID, "POOriginalNo", Session["Language"].ToString())].ToString())
+                        </td>
+                        <td class="filter">
+                            @Html.TextBoxFor(cr => cr.POOriginalNo, new { placeholder = ViewData[string.Format("{0}{1}{2}", viewID, "POOriginalNo", Session["Language"].ToString())].ToString() })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label(ViewData[string.Format("{0}{1}{2}", viewID, "PONo", Session["Language"].ToString())].ToString())
+                        </td>
+                        <td class="filter">
+                            @Html.TextBoxFor(cr => cr.PONumber, new { placeholder = ViewData[string.Format("{0}{1}{2}", viewID, "PONo", Session["Language"].ToString())].ToString() })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label(ViewData[string.Format("{0}{1}{2}", viewID, "Vendor", Session["Language"].ToString())].ToString())
+                        </td>
+                        <td class="filter">
+                            @Html.DropDownListFor(cr => cr.VendorNo, (List<SelectListItem>)ViewBag.Vendors)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="filter">
+                            @Html.Label(ViewData[string.Format("{0}{1}{2}", viewID, "FromDate", Session["Language"].ToString())].ToString())
+                        </td>
+                        <td class="filter">
+                            @Html.EditorFor(x => x.FromPODate, new { htmlAttributes = new { @class = "form-control", placeholder = "Order Date" } })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label(ViewData[string.Format("{0}{1}{2}", viewID, "ToDate", Session["Language"].ToString())].ToString())
+                        </td>
+                        <td class="filter">
+                            @Html.EditorFor(x => x.ToPODate, new { htmlAttributes = new { @class = "form-control", placeholder = "Order Date" } })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label(ViewData[string.Format("{0}{1}{2}", viewID, "Status", Session["Language"].ToString())].ToString())
+                        </td>
+                        <td class="filter">
+                            <div>
+                                <select multiple="multiple" style="width: auto;" id="Tempt" name="Tempt" onchange="General.UpdateSelection(this,'#Status')">
+                                    @if (ViewBag.Status != null)
+                                    {
+                                        foreach (var item in (List<SelectListItem>)ViewBag.Status)
+                                        {
+                                            <option value=@item.Value>
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>@Html.HiddenFor(x => x.Status)
+                        </td>
+                    </tr>
+                </table>
+                <p></p><input type="submit" value="@ViewData[string.Format("{0}{1}{2}", viewID, "FilterData", Session["Language"].ToString())].ToString()" id="filterPO" class="btn btn-primary" title="@ViewData[string.Format("{0}{1}{2}", viewID, "FilterData", Session["Language"].ToString())].ToString()" /> <button type="button" class="btn btn-primary" title="@ViewData[string.Format("{0}{1}{2}", viewID, "AddMultiNotes", Session["Language"].ToString())].ToString()" data-toggle="modal" data-target="#myModal" onclick="Supply.PurchaseOrder.GetSelectedPO()">@ViewData[string.Format("{0}{1}{2}", viewID, "AddMultiNotes", Session["Language"].ToString())].ToString()</button>
+                <!--<input type="button" title="Add Note to multiple Purchase Order" value="Multiple Note" onclick="Supply.PurchaseOrder.AddNoteToMultiplePO('@Url.Action("Edit", "PO", new { area = "Supply"})')" class="btn btn-primary" />-->
+            </div>
+        </div>
+    </div>
+}
+
+<p></p>
+<div id="POList"></div>
+<p></p>
+<div id="PODetails"></div>
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    <!--  library for date picker in edit for  -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!------- Check box in dropdown     -->
+    <script type="text/javascript" src="http://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="http://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css" />
+    @Scripts.Render("~/Scripts/boostrap.min.js")
+    @Scripts.Render("~/Content/boostrap.min.css")
+}
+
+<script>
+    const methods = (a, b) => {
+        alert(a);
+    };
+
+    methods(2, 2);
+    function UpdatePONote() {
+        var url = "@Url.Action("UpdateNote", "PO",new { area = "Supply"})";
+        var obj = new Supply.PurchaseOrder.AddNotes(url, $("#poNote").val());
+        var number = obj.UpdateNote();
+    }
+
+</script>
+@section functions
+{
+    var dateCtr = ["#FromPODate", "#ToPODate"];
+    General.setDatePickerToEditor(dateCtr);
+    General.setMultiSelectToList("#Tempt");
+}

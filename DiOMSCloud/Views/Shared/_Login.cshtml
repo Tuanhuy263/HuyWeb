@@ -1,0 +1,36 @@
+﻿@{
+    string caption = "Login";
+    string action = "Login";
+    Dictionary<string, string>  cb = Request.RequestContext.HttpContext.Application["Dictionary"] as Dictionary<string, string>;
+    string lang = "English";
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <font color="blue"><b>@User.Identity.Name</b></font>
+    Dictionary<string,string> colls = Session["Dictionary"] as Dictionary<string, string> ;
+    caption = colls[string.Format("{0}{1}{2}","Login","Logout", ExtraProcess.SelectedLanguage)].ToString() ;
+    action = "Logout";
+    lang = ExtraProcess.SelectedLanguage;
+}
+else
+{
+    caption = string.IsNullOrEmpty(Request.QueryString["lang"]) ? caption : cb[string.Format("{0}{1}{2}", "Login", "Login", Request.QueryString["lang"])].ToString();
+}
+@Html.ActionLink(caption, action, new { area = "", controller = "Security" }, new { onclick = "PreProcessLogOut(event, this)", id = action, name = action });
+
+
+    <script>
+        const PreProcessLogOut = (e, ctr) => {
+            var ctrName = ctr.getAttribute("name");
+            if (ctrName == "Logout")
+            {
+                e.preventDefault();
+                var lang = '@lang';
+                var msg = General.Messages[lang]['Logout'];
+                if (confirm(msg)) {
+                    location.href = $("#Logout").attr("href");
+                }
+            }
+        } 
+    </script>
+

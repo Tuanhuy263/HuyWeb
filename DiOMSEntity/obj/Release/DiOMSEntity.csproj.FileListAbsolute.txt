@@ -1,0 +1,10 @@
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\bin\Release\DiOMSEntity.dll.config
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\bin\Release\DiOMSEntity.dll
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\bin\Release\DiOMSEntity.pdb
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\bin\Release\EntityFramework.SqlServer.dll
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\bin\Release\EntityFramework.dll
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\obj\Release\DiOMSEntity.csprojAssemblyReference.cache
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\obj\Release\DiOMSEntity.csproj.CoreCompileInputs.cache
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\obj\Release\DiOMSEntity.csproj.CopyComplete
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\obj\Release\DiOMSEntity.dll
+D:\Sample SourceCode\Internal\DiOMSCloud\DiOMSEntity\obj\Release\DiOMSEntity.pdb

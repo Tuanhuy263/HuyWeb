@@ -1,0 +1,50 @@
+﻿@model SecurityModel
+@{
+    /**/
+    Dictionary<string, string> colls = ViewData["Dictionary"] as Dictionary<string, string>;
+    /**/
+
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string LanguageID = ViewData["Language"].ToString();
+}
+
+<h2>@colls[string.Format("{0}{1}{2}","Login","Title", LanguageID)] </h2>
+
+@using (Html.BeginForm("Login", "Security", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "loginFrm" }))
+{
+    @Html.AntiForgeryToken()
+    <i class="glyphicon glyphicon-user"></i>@:&nbsp; @Html.TextBoxFor(model => model.UserName, new { id = "UserName", @class = "form - control", placeholder = colls[string.Format("{0}{1}{2}","Login","UserName", LanguageID)]})
+    @Html.ValidationMessageFor(model => model.UserName)
+    <p></p>
+    <i class="glyphicon glyphicon-lock"></i>@:&nbsp; @Html.PasswordFor(model => model.Password, new { id = "Password", @class = "form - control", placeholder = colls[string.Format("{0}{1}{2}","Login","Password", LanguageID)] })
+    @Html.ValidationMessageFor(model => model.Password)
+    <p></p>
+    <img src="@Url.Action("GenerateCapchaImage", "Security", new { area=""})" /><br />
+    @Html.TextBoxFor(x => x.CapchaLetters, new { maxlength = "5", pattern = "[A-Za-z0-9]{5}", title = colls[string.Format("{0}{1}{2}", "Login", "NotRobot", LanguageID)]})
+    @Html.ValidationMessageFor(model => model.CapchaLetters)
+    <p></p>
+    <img src="~/Images/English.png" width="40" height="20" />@Html.RadioButton("Language", "English", ViewData["Language"].ToString() == "English" ? true : false, new {onchange= "ChangeLanguage(this)" })
+    <img src="~/Images/Vietnamese.png" width="40" height="20" />@Html.RadioButton("Language", "VietNamese", ViewData["Language"].ToString() == "VietNamese" ? true : false, new {onchange= "ChangeLanguage(this)" })
+    <p></p>
+    <button type="submit" class="btn btn-primary" onclick="General.DisableSubmitButton(event,'#loginFrm',null)"><span class="glyphicon glyphicon-off"></span>&nbsp;@colls[string.Format("{0}{1}{2}","Login","Login", LanguageID)]</button>
+}
+
+<!--<button id="tt">test anti forgen</button>-->
+<p></p>
+@section scripts{
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+<script>
+        function ChangeLanguage(ctrl) {
+        var url = '@Url.Action("Login","Security",new { area = "" })';
+        let returnURL = '@ViewBag.returnUrl';
+        Security.SwitchLanguage(ctrl, url, returnURL);
+    }
+    
+</script>
+
+

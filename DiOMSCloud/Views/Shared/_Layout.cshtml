@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - DiOMS Cloud</title>
+    @Styles.Render("~/Content/css")
+    <style>
+        #loader.show {
+            display: block;
+            left: 50%;
+            top: 50%;
+            position: fixed;
+            z-index: 101;
+            width: 32px;
+            height: 32px;
+            margin-left: -16px;
+            margin-top: -16px;
+        }
+    </style>
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("DiOMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <div>
+                    @{
+                        Html.RenderPartial("_Login");
+                    }
+                </div>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Sales Order", "Index", new { controller = "SO", area = "Demand" })</li>
+                    <li>@Html.ActionLink("Purchase Order", "Index", new { controller = "PO", area = "Supply" })</li>
+                    <li>@Html.ActionLink("Item", "Index", new { controller = "Item", area = "Item" })</li>
+                    <!--<li>@Html.ActionLink("About", "About", "Home")</li> -->
+                </ul>
+                &nbsp;@if (Session["Language"] != null)
+                {
+                    switch (Session["Language"].ToString())
+                    {
+                        case "VietNamese":
+                            <img src="~/Images/VietNamese.png" width="20" height="10" />
+                            break;
+                        default:
+                            <img src="~/Images/English.png" width="20" height="10" />
+                            break;
+                    }
+                }
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="container body-content">
+        <p></p>
+        <p></p>
+        <center>        
+            <div id="loader" class=" aletr" style="display:none">
+                 <img src="~/Images/ajax-loader.gif" />
+            </div>
+        </center>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Tuan Huy's Product</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modulescripts")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(function () {
+
+            $(document).ajaxStart(function () {
+                $("div#loader").addClass('show');
+            });
+
+            $(document).ajaxError(function (e) {
+                onAjaxComplete();
+            });
+
+            $(document).ajaxComplete(function () {
+                onAjaxComplete();
+            });
+
+            $(document).ajaxSuccess(function () {
+                onAjaxComplete();
+            });
+
+            $(document).ajaxStop(function () {
+                onAjaxComplete();
+            });
+
+            function onAjaxComplete() {
+                $("div#loader").removeClass('show');
+            }
+           @RenderSection("functions", required: false)
+        });
+    </script>
+    
+
+    
+
+</body>
+</html>

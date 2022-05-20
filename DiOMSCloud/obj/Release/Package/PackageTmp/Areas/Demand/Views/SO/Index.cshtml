@@ -1,0 +1,105 @@
+﻿@model DiOMSCloud.Areas.Demand.Models.SOCriteria
+
+@{
+    ViewBag.Title = "Sales Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet"  href="~/Content/TableFilter.css">
+
+<h1>Sales Order</h1>
+@using (Ajax.BeginForm("ListSO", "SO", new { area = "Demand" }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "SOList", InsertionMode = InsertionMode.Replace, LoadingElementId = "loader", OnBegin = "new function(){General.DisableButton('#filterSO');General.Empty('#SODetails')}", OnComplete = "General.EnableButton('#filterSO')" }, new { id = "frmFilterSO" }))
+{
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">Filter</div>
+            <div class="panel-body">
+                <table class="filter" border="0">
+                    <tr>
+                        <td class="filter">
+                            @Html.Label("SO Original No")
+                        </td>
+                        <td class="filter">
+                            @Html.TextBoxFor(cr => cr.SOOriginalNo, new { placeholder = "SO Original No" })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label("EDI SO No")
+                        </td>
+                        <td class="filter">
+                            @Html.TextBoxFor(cr => cr.EDISONo, new { placeholder = "EDI SO No" })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label("Customer")
+                        </td>
+                        <td class="filter">
+                            @Html.DropDownListFor(cr => cr.HubID, (List<SelectListItem>)ViewBag.Hubs)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="filter">
+                            @Html.Label("From Date")
+                        </td>
+                        <td class="filter">
+                            @Html.EditorFor(x => x.FromSODate, new { htmlAttributes = new { @class = "form-control", placeholder = "Order Date" } })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label("To Date")
+                        </td>
+                        <td class="filter">
+                            @Html.EditorFor(x => x.ToSODate, new { htmlAttributes = new { @class = "form-control", placeholder = "Order Date" } })
+                        </td>
+                        <td class="filter">
+                            &nbsp;@Html.Label("Status")
+                        </td>
+                        <td class="filter">
+                            <div>
+                                <select multiple="multiple" style="width: auto;" id="Tempt" name="Tempt" onchange="General.UpdateSelection(this,'#Status')">
+                                    @if (ViewBag.Status != null)
+                                    {
+                                        foreach (var item in (List<SelectListItem>)ViewBag.Status)
+                                        {
+                                            <option value=@item.Value>
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>@Html.HiddenFor(x => x.Status)
+                        </td>
+                    </tr>
+                </table>
+                <p></p><input type="submit" value="Filter" id="filterSO" class="btn btn-primary" title="Filter Data" /> <input type="button" title="Add Note to multiple Sales Order" value="Multiple Note" onclick="Demand.SalesOrder.AddNoteToMultipleSO('@Url.Action("Edit", "SO", new { area = "Demand"})')" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+
+}
+<p></p>
+<div id="SOList"></div>
+
+<p></p>
+<div id="SODetails"></div>
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+
+    <!--  library for date picker in edit for  -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!------- Check box in dropdown     -->
+    <script type="text/javascript" src="http://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="http://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css" />
+    @Scripts.Render("~/Scripts/boostrap.min.js")
+    @Scripts.Render("~/Content/boostrap.min.css")
+}
+
+@section functions
+{
+    var dateCtr = ["#FromSODate", "#ToSODate"];
+    General.setDatePickerToEditor(dateCtr);
+    General.setMultiSelectToList("#Tempt");
+}

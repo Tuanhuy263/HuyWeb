@@ -1,0 +1,59 @@
+﻿
+@using PagedList.Mvc
+@model  PagedList.IPagedList<ItemView>
+
+<link rel="stylesheet" href="~/Content/PagingStyle.css">
+
+    @using (Html.BeginForm())
+    {
+        <table class="table table-condensed-xs">
+            <thead>
+                <tr>
+                    <th class="header text-center">ERP Item Code</th>
+                    <th class="header text-center">Category</th>
+                    <th class="header text-center">Global Style</th>
+                    <th class="header text-center">Description</th>
+                    <th class="header text-center">Item Type</th>
+                </tr>
+            </thead>
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var so in Model)
+                {
+
+                    <tr align="center">
+                        <td>@so.ERPItemCode</td>
+                        <td>@so.Category</td>
+                        <td>@so.GlobalStyle</td>
+                        <td>@so.Description</td>
+                        <td>
+                            @if (so.ItemType == 2)
+                            {
+                                <span>Batch</span>
+                            }
+                            else if (so.ItemType == 1)
+                            {
+                                <span>None</span>
+                            }
+                            else
+                            {
+                                <span>Serial</span>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            }
+        </table>
+
+        <p></p>
+        <div id="container" style="margin-left: 20px">
+            <p></p>
+            <p></p>
+            <div class="pagination" style="margin-left: 400px">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("ListItem", "Item", new { page = page, area = "Item" }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "ItemList" }))
+            </div>
+        </div>
+
+    }

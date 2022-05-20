@@ -1,0 +1,32 @@
+﻿@model  DiOMSCloud.Areas.Demand.Models.SOModelView
+
+@{
+    ViewBag.Title = "Update Note Of Sales Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Update Note</h2><p></p>
+
+
+@using (Ajax.BeginForm("Edit", "SO", new { area = "Demand" }, new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "content", LoadingElementId= "loader", OnComplete = "General.EnableButton('#back')", OnFailure= "new function(){General.EnableButton('#back'),General.EnableButton('#save')}" }, new { id = "frmEditSO" }))
+{
+    @Html.Label(string.Format("SO No: {0}", @Model.SONumber))  
+    <p>
+        @Html.TextArea("Note", Model.Note, new { @class = "form-control", rows = "10" })
+        @Html.ValidationMessage("Note", "", new { @class = "text - danger" })
+        @Html.HiddenFor(so=>so.SONumber)
+    </p>
+    <p></p>
+       <input type="submit" value="Save" class="btn btn-primary" id="save" onclick="General.DisableSubmitButton(event,'#frmEditSO', '#back')"/>
+       <input type="button" value="Back" class="btn btn-primary" id="back" onclick="General.Back()"/>
+}
+<p></p>
+<span id="content"></span>
+
+@section scripts{
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}
+

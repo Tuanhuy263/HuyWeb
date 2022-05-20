@@ -1,0 +1,99 @@
+﻿@using PagedList.Mvc
+@model  PagedList.IPagedList<SOListView>
+
+<link rel="stylesheet" href="~/Content/PagingStyle.css">
+
+@{
+    string noteid = "";
+    string viewID = ViewBag.ViewID.ToString();
+}
+
+<input type="checkbox" title="Only apply into current page" onclick="Demand.SalesOrder.Check_UncheckAll(this)" />Check/Uncheck All
+@using (Html.BeginForm())
+{
+    <table class="table table-condensed-xs">
+        <thead>
+            <tr>
+                <th></th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "ID", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "SONo", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "SOOriginalNo", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "Hub", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "SODate", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "Status", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "PO", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "ASN", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "BOL", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "PaymentDue", Session["Language"].ToString())].ToString()</th>
+                <th class="header text-center">@ViewData[string.Format("{0}{1}{2}", viewID, "Note", Session["Language"].ToString())].ToString()</th>
+                <th></th>
+            </tr>
+        </thead>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var so in Model)
+            {
+
+        <tr align="center">
+            <td>@Html.CheckBox(string.Format("chkSO_{0}", so.SONo), new { id = string.Format("chkSO_{0}", so.SONo) })</td>
+            <td>
+                <a href="#" id="@so.SONo" onclick="Demand.SalesOrder.ShowSODetails(event,'@Url.Action("Details", "SO", new { area = "Demand" })','@so.SONo')">@so.SONo</a>
+                <!----<a href="@Url.Action("Details", "SO", new { area = "Demand", id = @so.SONo.ToString() })">@so.SONo</a>  -->
+            </td>
+
+
+            <td>@so.SONumber</td>
+            <td>er</td>
+            <td>@so.HubCode</td>
+            <td>@so.SODate.ToString("MM/dd/yyyy")</td>
+            <td>@so.Status</td>
+            <td>
+                @if (so.HasPO)
+                {
+                    <img width="30" height="30" src="~/Images/IsOk.png" />
+                }
+            </td>
+            <td>
+                @if (so.HasASN)
+                {
+                    <img width="30" height="30" src="~/Images/IsOk.png" />
+                }
+            </td>
+            <td>@so.BOLNo</td>
+            <td>
+                @{
+                    string payment = string.Format("{0:#,###,###.###} {1}", so.PaymentDue, "$");
+                    @payment
+                }
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(so.Note))
+                {
+                    noteid = string.Format("note{0}", so.SONo);
+                <a data-toggle="collapse" data-parent="#accordion" href="#@noteid">@ViewData[string.Format("{0}{1}{2}", viewID, "ViewNote", Session["Language"].ToString())].ToString()</a>
+                    <div id="@noteid" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            @so.Note
+                        </div>
+                    </div>
+                }
+            </td>
+            <td><a href="@Url.Action("Edit", "SO", new { area = "Demand", id = Url.Encode(so.SONo.ToString()) })">@ViewData[string.Format("{0}{1}{2}", viewID, "AddNote", Session["Language"].ToString())].ToString()</a></td>
+        </tr>
+            }
+
+        }
+    </table>
+    <p></p>
+    <div id="container" style="margin-left: 20px">
+        <p></p>
+        <p></p>
+        <div class="pagination" style="margin-left: 400px">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("ListSO", "SO", new { page = page, area = "Demand" }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "SOList" }))
+        </div>
+    </div>
+
+}
+
+

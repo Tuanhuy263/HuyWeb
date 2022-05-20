@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Languages>
+  <View Name="SOList">
+    <CaptionID Name="Title">
+      <English>Sales Order</English>
+      <VietNamese>Đơn Bán Hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="SOOriginalNo">
+      <English>SO Original No</English>
+      <VietNamese>Mã Đơn hàng Gốc</VietNamese>
+    </CaptionID>
+    <CaptionID Name="EDISONo">
+      <English>EDI SO No</English>
+      <VietNamese>Mã EDI Đơn hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Hub">
+      <English>Hub</English>
+      <VietNamese>Khách hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="FromDate">
+      <English>From Date</English>
+      <VietNamese>Từ ngày</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ToDate">
+      <English>To Date</English>
+      <VietNamese>Tới ngày</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Status">
+      <English>Status</English>
+      <VietNamese>Tình trạng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="FilterData">
+      <English>Filter</English>
+      <VietNamese>Lọc Thông Tin</VietNamese>
+    </CaptionID>
+    <CaptionID Name="AddMultiNotes">
+      <English>Add Multiple Note</English>
+      <VietNamese>Thêm Nhiều Ghi Chú</VietNamese>
+    </CaptionID>
+    
+  </View>
+
+  <View Name="POList">
+    <CaptionID Name="Title">
+      <English>Purchase Order</English>
+      <VietNamese>Đơn Mua Hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="POOriginalNo">
+      <English>PO Original No</English>
+      <VietNamese>Mã Đơn hàng Gốc</VietNamese>
+    </CaptionID>
+    <CaptionID Name="PONo">
+      <English>PO No</English>
+      <VietNamese>Mã Đơn hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Vendor">
+      <English>Vendor</English>
+      <VietNamese>Nhà Cung Cấp</VietNamese>
+    </CaptionID>
+    <CaptionID Name="FromDate">
+      <English>From Date</English>
+      <VietNamese>Từ ngày</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ToDate">
+      <English>To Date</English>
+      <VietNamese>Tới ngày</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Status">
+      <English>Status</English>
+      <VietNamese>Tình trạng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="FilterData">
+      <English>Filter</English>
+      <VietNamese>Lọc Thông Tin</VietNamese>
+    </CaptionID>
+    <CaptionID Name="AddMultiNotes">
+      <English>Add Multiple Note</English>
+      <VietNamese>Thêm Nhiều Ghi Chú</VietNamese>
+    </CaptionID>
+  </View>
+
+  <View Name="POHeaderList">
+    <CaptionID Name="ID">
+      <English>ID</English>
+      <VietNamese>Mã Số</VietNamese>
+    </CaptionID>
+    <CaptionID Name="PONo">
+      <English>PO #</English>
+      <VietNamese>Mã Đơn Hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="POOriginalNo">
+      <English>PO Ori #</English>
+      <VietNamese>Mã Đơn hàng gốc</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Vendor">
+      <English>Vendor</English>
+      <VietNamese>Nhà Cung Cấp</VietNamese>
+    </CaptionID>
+    <CaptionID Name="SONo">
+      <English>SO #</English>
+      <VietNamese>Mã Bán Hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="PODate">
+      <English>PO Date</English>
+      <VietNamese>Ngày Đơn Hàng</VietNamese>
+    </CaptionID>
+    
+    <CaptionID Name="Status">
+      <English>Status</English>
+      <VietNamese>Tình trạng</VietNamese>
+    </CaptionID>
+    
+    <CaptionID Name="PaymentDue">
+      <English>Payment Due</English>
+      <VietNamese>Tổng số tiền</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Note">
+      <English>Note</English>
+      <VietNamese>Ghi chú</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ViewNote">
+      <English>View Note</English>
+      <VietNamese>Xem Ghi Chú</VietNamese>
+    </CaptionID>
+    <CaptionID Name="AddNote">
+      <English>Add Note</English>
+      <VietNamese>Thêm Ghi Chú</VietNamese>
+    </CaptionID>
+  </View>
+  
+  
+  
+  <View Name="SOHeaderList">
+    
+    <CaptionID Name="ID">
+      <English>ID</English>
+      <VietNamese>Mã Số</VietNamese>
+    </CaptionID>
+    <CaptionID Name="SONo">
+      <English>SO #</English>
+      <VietNamese>Mã Đơn hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="SOOriginalNo">
+      <English>Cust.SO #</English>
+      <VietNamese>Mã Đơn hàng gốc</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Hub">
+      <English>Hub</English>
+      <VietNamese>Khách hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="SODate">
+      <English>SO Date</English>
+      <VietNamese>Ngày Đơn Hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="PO">
+      <English>PO</English>
+      <VietNamese>Mua hàng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Status">
+      <English>Status</English>
+      <VietNamese>Tình trạng</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ASN">
+      <English>ASN</English>
+      <VietNamese>ASN</VietNamese>
+    </CaptionID>
+    <CaptionID Name="BOL">
+      <English>BOL #</English>
+      <VietNamese>Mã vận đơn</VietNamese>
+    </CaptionID>
+    <CaptionID Name="PaymentDue">
+      <English>Payment Due</English>
+      <VietNamese>Tổng số tiền</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Note">
+      <English>Note</English>
+      <VietNamese>Ghi chú</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ViewNote">
+      <English>View Note</English>
+      <VietNamese>Xem Ghi Chú</VietNamese>
+    </CaptionID>
+    <CaptionID Name="AddNote">
+      <English>Add Note</English>
+      <VietNamese>Thêm Ghi Chú</VietNamese>
+    </CaptionID>
+  </View>
+
+  <View Name="Login">
+    <CaptionID Name="Title">
+      <English>Login</English>
+      <VietNamese>Dang nhap</VietNamese>
+    </CaptionID>
+    <CaptionID Name="UserName">
+      <English>User Name</English>
+      <VietNamese>Tên tài khoản</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Password">
+      <English>Password</English>
+      <VietNamese>Mật khẩu</VietNamese>
+    </CaptionID>
+    <CaptionID Name="NotRobot">
+      <English>Please input 5 alphanumerblet</English>
+      <VietNamese>Nhập 5 ký tự trên</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Login">
+      <English>Login</English>
+      <VietNamese>Đăng nhập</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Logout">
+      <English>Logout</English>
+      <VietNamese>Thoát</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ValidateUserName">
+      <English>User Name is empty</English>
+      <VietNamese>Tên tài khoản bị rỗng</VietNamese>
+    </CaptionID>
+  </View>
+
+  <View Name="ItemList">
+    <CaptionID Name="Title">
+      <English>Items</English>
+      <VietNamese>Sản phẩm</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ERPItemCode">
+      <English>ERP Item Code</English>
+      <VietNamese>Mã Sản Phẩm</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ItemType">
+      <English>Item Type</English>
+      <VietNamese>Loại Sản Phẩm</VietNamese>
+    </CaptionID>
+    <CaptionID Name="FilterData">
+      <English>Filter</English>
+      <VietNamese>Lọc Thông Tin</VietNamese>
+    </CaptionID>
+  </View>
+
+  <View Name="ItemListHeader">
+    <CaptionID Name="Category">
+      <English>Category</English>
+      <VietNamese>Thể Loại</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ERPItemCode">
+      <English>ERP Item Code</English>
+      <VietNamese>Mã Sản Phẩm</VietNamese>
+    </CaptionID>
+    <CaptionID Name="GlobalStyle">
+      <English>Global Style</English>
+      <VietNamese>Kiểu Toàn Cầu</VietNamese>
+    </CaptionID>
+    <CaptionID Name="Description">
+      <English>Description</English>
+      <VietNamese>Mô tả</VietNamese>
+    </CaptionID>
+    <CaptionID Name="ItemType">
+      <English>Item Type</English>
+      <VietNamese>Loại Sản Phẩm</VietNamese>
+    </CaptionID>
+    
+  </View>
+</Languages>

@@ -1,0 +1,24 @@
+﻿@{
+    string caption = "Login";
+    string action = "Login";
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <font color="blue"><b>@User.Identity.Name</b></font>
+    caption = "Logout";
+    action = "Logout";
+}
+@Html.ActionLink(caption, action, new { area = "", controller = "Security"},new { onclick = "PreProcessLogOut(event, this)", id = action, name=action });
+
+<script>
+    function PreProcessLogOut(e, ctr) {
+        var ctrName = ctr.getAttribute("name");
+        if (ctrName === "Logout") {
+            e.preventDefault();
+            if (confirm("Are you sure to sign out?")) {
+                location.href = $("#Logout").attr("href");
+            }
+        }
+    }
+</script>
+
