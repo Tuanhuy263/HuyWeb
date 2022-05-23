@@ -8,7 +8,7 @@ namespace DiOMSCloud
 {
     public class SecurityModel
     {
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Please enter User Name")]
+        [Required(AllowEmptyStrings =false,ErrorMessage ="Please enter User Name")]//
         [MaxLength(20,ErrorMessage ="Length exceeds limit")]
         public string UserName { set; get; }
 
