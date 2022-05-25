@@ -39,7 +39,4 @@ steps:
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
 
-parameters:
-- name: WebsiteName          # name of the parameter; required
-  type: string            # see the enum data types in the following section
-  default: HuyWeb          # default value; if no default, then the parameter MUST be given by the user at runtime
+
